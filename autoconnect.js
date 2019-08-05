@@ -3,6 +3,7 @@ console.clear();
 
 const connectBtn = '.search-result__action-button';
 const approveBtn = 'button.ml1';
+const pause = 1000; // pause in ms
 
 let body = document.querySelector('body');
 body.scrollIntoView(false);
@@ -17,10 +18,12 @@ function worker(){
 
   // get popup with approve and recommendation add message in connect
   function addHR(i, callback){
-    connect[i].click();
-    console.log(connect[i]);
-    console.log('clicked');
-    callback();
+    setTimeout(()=>{
+      connect[i].click();
+        console.log(connect[i]);
+        console.log('clicked');
+      callback();
+    }, pause);
   }
 
   function insertMessage() {
@@ -30,7 +33,9 @@ function worker(){
   //press button approve
   function approve() {
     const approve = document.querySelector(approveBtn);
-    approve.click();
-    console.log('closed');
+    setTimeout(()=>{
+      approve.click();
+      console.log('closed');
+    }, pause);
   }
 }
