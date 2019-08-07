@@ -34,6 +34,7 @@ function worker() {
   if(connect === null) {
     document.documentElement.scroll(0, +document.documentElement.scrollHeight.toFixed());
     document.querySelector('button.artdeco-pagination__button--next').click();
+    console.clear();
     console.log('Next...');
     return setTimeout(()=>start(worker), pause);
   }
@@ -44,7 +45,14 @@ function worker() {
 
 function pressConnect(event) {
   let el = event.target;
-  if (el.tagName === 'DIV' && el.classList.contains('ip-fuse-limit-alert')) return console.log('Limitited connection stopped');
+  if (el.tagName === 'DIV' && el.classList.contains('ip-fuse-limit-alert')) {
+    console.clear();
+    return console.log('Limitited connection stopped');
+  }
+  if(document.querySelector('.ip-fuse-limit-alert')) {
+    console.clear();
+    return console.log('Limitited connection stopped');
+  }
   if (el.tagName === msgBtn[0] && el.classList.contains(msgBtn[1])){
     insertMessage();
   }
