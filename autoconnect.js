@@ -33,7 +33,9 @@ function worker() {
   connect = document.querySelector(connectBtn);
   if(connect === null) {
     document.documentElement.scroll(0, +document.documentElement.scrollHeight.toFixed());
-    return console.log('Finished');
+    document.querySelector('button.artdeco-pagination__button--next').click();
+    console.log('Next...');
+    return setTimeout(()=>start(worker), pause);
   }
   body = document;
   body.addEventListener('DOMNodeInserted', pressConnect);
