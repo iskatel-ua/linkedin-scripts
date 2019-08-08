@@ -2,8 +2,10 @@
 console.clear();
 
 let connect, body = null;
-let msg = 'hi, I a\'m expanding the network of my contacts))';
-
+let msg = 'hi, I a\'m expanding the network of my contacts))'; // Here your text message
+/*
+* Little config app
+* */
 const connectBtn = '.search-result__action-button';
 const modalBlock = 'section.modal';
 const modalNameRecipient = 'section.modal strong';
