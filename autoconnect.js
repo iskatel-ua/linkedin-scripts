@@ -1,9 +1,17 @@
 'use strict';
 console.clear();
+
+let connect, body = null;
+let msg = 'hi, I a\'m expanding the network of my contacts))';
+
 const connectBtn = '.search-result__action-button';
-let msg = 'hi, I a\'m looking for Frontend Developer remote work. Do you have something to offer me now or in the future?';
+const modalBlock = 'section.modal';
+const modalNameRecipient = 'section.modal strong';
 const msgBlock = '.send-invite__custom-message';
 const msgBtn = ['BUTTON', 'mr1'];
+const actionsBtn = '.send-invite__actions button';
+const nextPage = 'button.artdeco-pagination__button--next';
+const limitOut = 'ip-fuse-limit-alert';
 const pause = 3000; // pause in ms
 
 function start(callback){
@@ -11,32 +19,34 @@ function start(callback){
     heigthMax: +document.documentElement.scrollHeight.toFixed(),
     screen: +document.documentElement.clientHeight.toFixed(),
     positon: +document.documentElement.scrollTop.toFixed(),
-    to: function () {
+    to: function (go) {
       if( (this.positon + this.screen) < this.heigthMax ){
-        this.positon += 50;
+        this.positon += 5;
         document.documentElement.scroll(0, this.positon);
       }else{
         clearInterval(go);
         setTimeout(() => callback(), pause);
-        return;
+        return 0;
       }
     }
   };
   document.documentElement.scroll(0, 0);
-  let go = setInterval(() => scroll.to(go), 300);
+  let go = setInterval(() => scroll.to(go), 50);
 }
-
-let connect, body = null;
 
 function worker() {
   document.querySelectorAll(connectBtn).forEach((item)=>clearButton(item));
   connect = document.querySelector(connectBtn);
   if(connect === null) {
     document.documentElement.scroll(0, +document.documentElement.scrollHeight.toFixed());
-    document.querySelector('button.artdeco-pagination__button--next').click();
-    console.clear();
-    console.log('Next...');
-    return setTimeout(()=>start(worker), pause);
+    if (document.querySelector(nextPage)){
+      document.querySelector(nextPage).click();
+      console.clear();
+      console.log('Next...');
+      return setTimeout(()=>start(worker), pause);
+    }else{
+     return console.log('Finish');
+    }
   }
   body = document;
   body.addEventListener('DOMNodeInserted', pressConnect);
@@ -45,11 +55,11 @@ function worker() {
 
 function pressConnect(event) {
   let el = event.target;
-  if (el.tagName === 'DIV' && el.classList.contains('ip-fuse-limit-alert')) {
+  if (el.tagName === 'DIV' && el.classList.contains(limitOut)) {
     console.clear();
     return console.log('Limitited connection stopped');
   }
-  if(document.querySelector('.ip-fuse-limit-alert')) {
+  if(document.querySelector('.'+limitOut)) {
     console.clear();
     return console.log('Limitited connection stopped');
   }
@@ -72,18 +82,16 @@ function approve(el) {
 // Add message
 function insertMessage() {
   body.removeEventListener('DOMNodeInserted', pressConnect); // delete listener wait popup
-  let name = null;
-  if(document.querySelector('section.modal strong')){
-    name = document.querySelector('section.modal strong').textContent.split(' ')[0];
-  }else{
-    name = '';
+  let name = '';
+  if(document.querySelector(modalNameRecipient)){
+    name = document.querySelector(modalNameRecipient).textContent.split(' ')[0];
   }
-  let popupBtn = document.querySelectorAll('.send-invite__actions button');
-  const modal = document.querySelector('section.modal');
+  let popupBtn = document.querySelectorAll(actionsBtn);
+  const modal = document.querySelector(modalBlock);
   modal.addEventListener('DOMNodeInserted', (event)=>{
     let el = event.target;
     if(el.tagName === 'TEXTAREA'){
-      popupBtn = document.querySelectorAll('.send-invite__actions button');
+      popupBtn = document.querySelectorAll(actionsBtn);
       document.querySelector(msgBlock).value = `${name} ${msg}`;
       popupBtn[1].addEventListener('click', pressApprove(el, worker));
       approve(popupBtn[1]);
