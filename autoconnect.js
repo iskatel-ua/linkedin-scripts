@@ -8,7 +8,7 @@ let msg = 'hi, I a\'m expanding the network of my contacts))'; // Here your text
 * */
 const connectBtn = '.search-result__action-button';
 const modalBlock = 'section.modal';
-const modalNameRecipient = 'section.modal strong';
+const modalNameRecipient = '.actor-name';
 const msgBlock = '.send-invite__custom-message';
 const msgBtn = ['BUTTON', 'mr1'];
 const actionsBtn = '.send-invite__actions button';
@@ -86,7 +86,9 @@ function insertMessage() {
   body.removeEventListener('DOMNodeInserted', pressConnect); // delete listener wait popup
   let name = '';
   if(document.querySelector(modalNameRecipient)){
-    name = document.querySelector(modalNameRecipient).textContent.split(' ')[0];
+    let a = document.querySelector(connectBtn);
+    let b = a.parentNode.parentNode.parentNode;
+    name = b.querySelector('.actor-name').textContent.split(' ')[0];
   }
   let popupBtn = document.querySelectorAll(actionsBtn);
   const modal = document.querySelector(modalBlock);
