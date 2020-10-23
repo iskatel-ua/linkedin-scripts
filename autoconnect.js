@@ -7,11 +7,11 @@ let msg = 'hi, I a\'m expanding the network of my contacts))'; // Here your text
 * Little config app
 * */
 const connectBtn = '.search-result__action-button';
-const modalBlock = 'section.modal';
+const modalBlock = '.artdeco-modal';
 const modalNameRecipient = '.actor-name';
 const msgBlock = '.send-invite__custom-message';
 const msgBtn = ['BUTTON', 'mr1'];
-const actionsBtn = '.send-invite__actions button';
+const actionsBtn = '.artdeco-modal__actionbar button';
 const nextPage = 'button.artdeco-pagination__button--next';
 const limitOut = 'ip-fuse-limit-alert';
 const pause = 3000; // pause in ms
@@ -52,6 +52,7 @@ function worker() {
   }
   body = document;
   body.addEventListener('DOMNodeInserted', pressConnect);
+  console.log(1)
   connect.click();
 }
 
