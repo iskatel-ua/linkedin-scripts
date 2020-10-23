@@ -52,7 +52,7 @@ function worker() {
   }
   body = document;
   body.addEventListener('DOMNodeInserted', pressConnect);
-  console.log(1)
+  
   connect.click();
 }
 
